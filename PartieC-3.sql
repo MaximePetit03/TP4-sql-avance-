@@ -1,0 +1,23 @@
+-- (a) Suivi GPS 3 s / 30 000 véhicules :
+--     Moteur : Colonnes Larges (Cassandra) | CAP/PACELC : AP / PA-EL
+--     4 critères : 
+--         Cohérence éventuelle
+--         Scalabilité horizontale
+--         Structure en séries temporelles
+--         Accès : beaucoup d'écritures en continu et lectures dans l'ordre du temps
+--
+-- (b) Facturation bancaire des trajets :
+--     Moteur : SGBD Relationnel ACID | CAP/PACELC : CP / PC-EC
+--     4 critères : 
+--         Cohérence stricte ACID
+--         Scalabilité surtout verticale + copies de lecture
+--         Structure en tables organisées sans doublons
+--         Accès : opérations fiables sur plusieurs lignes, croisements de tables et suivi des comptes
+--
+-- (c) Suggestion d'itinéraires / amis communs à 3 degrés :
+--     Moteur : Base orientée Graphe | CAP/PACELC : CP / PC-EC
+--     4 critères : 
+--         Cohérence des liens
+--         Scalabilité en explorant surtout les liens proches plutôt que toute la base
+--         Structure en points reliés par des liens nommés
+--         Accès : suivre des liens de proche en proche jusqu'à 3 niveaux sans faire trop de jointures

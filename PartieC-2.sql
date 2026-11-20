@@ -1,0 +1,15 @@
+-- NON-REPEATABLE READ sous READ COMMITTED :
+--   Sous READ COMMITTED, chaque lecture voit les modifications déjà validées au moment de la requête
+--   Si une transaction concurrente met à jour et valide le solde d'un compte entre deux SELECT 
+--   d'une même transaction les deux lectures retournent des montants différents
+--
+-- RÉSOLUTION sous REPEATABLE READ :
+--   REPEATABLE READ fige un snapshot cohérent pour la transaction : même si une
+--   autre transaction valide une modification sur le compte en cours de route
+--   la seconde lecture conserve la valeur initiale de la transaction
+--
+-- RÔLE DU WAL lors d'une coupure serveur en plein virement :
+--   Les écritures sont d'abord enregistrées dans le WAL avant d'atteindre les pages de données
+--   Lors du redémarrage après la panne :
+--    les transactions incomplètes sont annulées ce qui préserve l'Atomicité
+--    les transactions validées inscrites dans le WAL sont rejouées ce qui préserve la Durabilité
